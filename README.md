@@ -1,2 +1,2 @@
 # minidtube
-DTube for robots
+Galaxii for robots

@@ -13,7 +13,7 @@ const crawlers = jsonfile.readFileSync(file)
 // currently whitelisting a few robots
 // const allowedRobots = ['facebookexternalhit', 'Discordbot', 'Slackbot'
 //     , 'bingbot', 'Twitterbot']
-const rootDomain = 'https://d.tube'
+const rootDomain = 'https://galaxii.io'
 
 const lightrpc = createClient('https://api.steemit.com');
 
@@ -38,7 +38,7 @@ app.get('*', function(req, res, next) {
 
     if (isRobot)
         console.log(isRobot, 'GET', req.path, req.query)
-    
+
     if (isRobot && reqPath.startsWith('/v/')) {
         // DIRTY ROBOTS
         getVideoHTML(
@@ -64,7 +64,7 @@ app.get('*', function(req, res, next) {
                 } else {
                     baseHTML = baseHTML.replace(/@@METAVIDEODURATION@@/g, '')
                 }
-                
+
                 res.send(baseHTML)
             })
         })
@@ -80,7 +80,7 @@ app.get('*', function(req, res, next) {
             res.redirect('/#!'+reqPath);
         }
     }
-    
+
 })
 
 app.listen(port, () => console.log('minidtube listening on port '+port))
@@ -132,7 +132,7 @@ function getHumanHTML(cb) {
 }
 
 function getVideoHTML(author, permlink, cb) {
-    lightrpc.send('get_state', [`/dtube/@${author}/${permlink}`], function(err, result) {
+    lightrpc.send('get_state', [`/galaxii/@${author}/${permlink}`], function(err, result) {
         if (err) {
             cb(err)
             return
@@ -148,9 +148,9 @@ function getVideoHTML(author, permlink, cb) {
         var downvotedBy = []
         for (let i = 0; i < video.active_votes.length; i++) {
             if (parseInt(video.active_votes[i].rshares) > 0)
-                upvotedBy.push(video.active_votes[i].voter);    
+                upvotedBy.push(video.active_votes[i].voter);
             if (parseInt(video.active_votes[i].rshares) < 0)
-                downvotedBy.push(video.active_votes[i].voter);         
+                downvotedBy.push(video.active_votes[i].voter);
         }
 
         var html = ''
@@ -169,7 +169,7 @@ function getVideoHTML(author, permlink, cb) {
             html += downvotedBy.join(', ')
             html += '</p>'
         }
-        
+
         var url = rootDomain+'/#!/v/'+video.info.author+'/'+video.info.permlink
         var snap = 'https://ipfs.io/ipfs/'+video.info.snaphash
         var urlVideo = 'https://ipfs.io/ipfs/'+hashVideo

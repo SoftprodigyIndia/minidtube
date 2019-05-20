@@ -1,13 +1,13 @@
 {
   "name": "minidtube",
   "version": "1.0.0",
-  "description": "generates html for robots who dont understand dtube",
+  "description": "generates html for robots who dont understand galaxii",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "dtube",
+    "galaxii",
     "video"
   ],
   "author": "Adrien M",
